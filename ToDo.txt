@@ -3,4 +3,5 @@
 [x] Adicionar movimento.
 [x] Adicionar comida/pontuação.
 [x] Adicionar fim de jogo.
-[ ] Estilizar página.
+[x] Estilizar página.
+[ ] Adicionar comando em que o jogo só começe ao apertar um botão.

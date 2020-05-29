@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <head>
+  <link rel="stylesheet" type="text/css" href="style.css">
   <title>Welcome to Snake!</title>
 </head>
 <body>
-  <div id="score">0</div>
-  <canvas id="gameCanvas" width="300" height="300"></canvas>
-
-  <style>
-    #gameCanvas {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  </style>
-
+  <div id="container">
+    <h1>Bem-Vindo ao Snake!</h1>
+    <div id="score">0</div>
+    <canvas id="gameCanvas" width="300" height="300"></canvas>
+    <ul>
+      <p>Instruções</p>
+      <li>Utilze as setas para se mover.</li>
+      <li>Os quadrados laranjas aumentam a sua pontuação e seu tamanho.</li>
+      <li>Não acerte as paredes e seu corpo.</li>
+      <li>Para reiniciar o jogo atualize a página.</li>
+    </ul>
+    <p>Este projeto foi feito utilizando HTML e Javascript para a matéria de LACC do curso
+      Ciências da Computação pelo <i>Instituto Federal de São Paulo.</i></p>
+  </div>
+  
   <script>
     let snake = [ {x: 150, y: 150},
                   {x: 140, y: 150}, 
@@ -81,8 +85,8 @@
     }
 
     function drawSnakePart(snakePart) {
-      context.fillStyle = 'lightgreen';
-      context.strokeStyle = 'darkgreen';
+      context.fillStyle = 'cyan';
+      context.strokeStyle = 'darkblue';
       context.fillRect(snakePart.x, snakePart.y, 10, 10);
       context.strokeRect(snakePart.x, snakePart.y, 10, 10);
     }    
@@ -145,7 +149,7 @@
 
     function drawFood() {
       context.fillStyle = "orange";
-      context.strokeStyle = "dark orange";
+      context.strokeStyle = "orangered";
 
       context.fillRect(foodX, foodY, 10, 10);
       context.strokeRect(foodX, foodY, 10, 10);

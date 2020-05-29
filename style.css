@@ -1,0 +1,47 @@
+body {
+  background-color: rgb(53, 45, 57);
+}
+
+h1 {
+  text-align: center;
+  font-size: 52px;
+  font-weight: bold;
+  font-family: Bangers, sans-serif;
+}
+
+ul {
+  text-align: center;
+  font-family: Bangers, sans-serif;
+  font-size: 20px;  
+}
+
+p {
+  text-align: center;
+  font-family: Bangers, sans-serif;
+  font-size: 24px;
+}
+
+#container {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 15px;
+  background-color: rgb(93, 83, 107);
+  padding: 20px;
+}
+
+#score {  
+  text-align: center;
+  font-family: Bangers, sans-serif;
+  font-size: 32px;
+}
+
+#gameCanvas {
+  object-position: center;
+  padding-left: 500px;  
+}
+
+@font-face {
+  font-family: Bangers;
+  src: url('font/Bangers-Regular.ttf')
+       format('truetype');
+}
