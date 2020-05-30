@@ -4,4 +4,5 @@
 [x] Adicionar comida/pontuação.
 [x] Adicionar fim de jogo.
 [x] Estilizar página.
-[ ] Adicionar comando em que o jogo só começe ao apertar um botão.
+[x] Adicionar comando em que o jogo só começe ao apertar um botão.
+[ ] Reiniciar o jogo sem reiniciar a página.

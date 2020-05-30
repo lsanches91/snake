@@ -3,6 +3,7 @@ body {
 }
 
 h1 {
+  margin: auto;
   text-align: center;
   font-size: 52px;
   font-weight: bold;
@@ -10,15 +11,43 @@ h1 {
 }
 
 ul {
+  margin: auto;
+  padding: 20px;
   text-align: center;
   font-family: Bangers, sans-serif;
   font-size: 20px;  
 }
 
 p {
+  margin: auto;
   text-align: center;
   font-family: Bangers, sans-serif;
   font-size: 24px;
+}
+
+button {
+  background-color: rgb(75, 74, 103);  
+  padding: 20px 20px;
+  margin: auto;
+  text-align: center;
+  font-family: Bangers, sans-serif;
+  font-size: 24px;
+  border-radius: 8px;
+  border: 3px solid black;
+  width: 15%; 
+}
+
+button:hover {
+  background-color: rgb(26, 20, 35);
+  color: rgb(118, 123, 145);
+  border: solid rgb(118, 123, 145);
+}
+
+button:active {
+  background-color: rgb(75, 74, 103);
+  color: black;
+  border: solid black;
+  transform: translateY(3px);
 }
 
 #container {
@@ -33,6 +62,7 @@ p {
   text-align: center;
   font-family: Bangers, sans-serif;
   font-size: 32px;
+  margin: auto;
 }
 
 #gameCanvas {
