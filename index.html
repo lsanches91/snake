@@ -1,185 +1,188 @@
 <!DOCTYPE html>
-<head>
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <title>Bem-Vindo ao Snake!</title>
-</head>
-<body>
-  <div id="container">
-    <h1>Bem-Vindo ao Snake!</h1>
-    <div id="score">0</div>
-    <canvas id="gameCanvas" width="300" height="300"></canvas>
-    <button type="button" onclick="gameStart()">Jogar!</button>
-    <ul>
-      <p>Instruções</p>
-      <li>Utilze as setas para se mover.</li>
-      <li>Os quadrados laranjas aumentam a sua pontuação e seu tamanho.</li>
-      <li>Não acerte as paredes e seu corpo.</li>
-      <li>Para reiniciar o jogo atualize a página.</li>
-    </ul>
-    <p>Este projeto foi feito utilizando HTML e Javascript para a matéria de LACC do curso
-      Ciências da Computação pelo <i>Instituto Federal de São Paulo.</i></p>
-  </div>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Bem-Vindo ao Snake!</title>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Bem-Vindo ao Snake!</h1>
+      <div id="score">0</div>
+      <canvas id="gameCanvas" width="300" height="300"></canvas>
+      <button type="button" onclick="gameStart()">Jogar!</button>
+      <ul>
+        <p>Instruções</p>
+        <li>Utilze "W A S D" para se mover.</li>
+        <li>Os quadrados laranjas aumentam a sua pontuação e seu tamanho.</li>
+        <li>Não acerte as paredes e seu corpo.</li>
+        <li>Para reiniciar o jogo atualize a página.</li>
+      </ul>
+      <p>Este projeto foi feito utilizando HTML e Javascript para a matéria de LACC do curso
+        Ciências da Computação pelo <i>Instituto Federal de São Paulo.</i></p>
+    </div>
+    
+    <script>
+      let snake = [ {x: 150, y: 150},
+                    {x: 140, y: 150}, 
+                    {x: 130, y: 150}, 
+                    {x: 120, y: 150} ]
   
-  <script>
-    let snake = [ {x: 150, y: 150},
-                  {x: 140, y: 150}, 
-                  {x: 130, y: 150}, 
-                  {x: 120, y: 150} ]
-
-    let isChangingDirection = false;
-    let isGameStarted = false;
-    let score = 0;
-    let movementX = 10;
-    let movementY = 0;
-    let gameSpeed = 100;
-
-    const gameCanvas = document.getElementById("gameCanvas");
-    const context = gameCanvas.getContext("2d");         
-
-    clearCanvas();
-    
-    document.addEventListener("keydown", changeDirection);
-    
-    function gameStart() {
+      let isChangingDirection = false;
+      let isGameStarted = false;
+      let score = 0;
+      let movementX = 10;
+      let movementY = 0;
+      let gameSpeed = 100;
+  
+      const gameCanvas = document.getElementById("gameCanvas");
+      const context = gameCanvas.getContext("2d");         
+  
+      clearCanvas();
       
-      if(isGameStarted == false) {
-        isGameStarted = true;        
-        main();
-        createFood();
-      }      
-    }
-
-    function main() {
-
-      if(gameOver()) {
-        isGameStarted = false;
-        return
+      document.addEventListener("keydown", changeDirection);
+      
+      function gameStart() {
+        
+        if(isGameStarted == false) {
+          isGameStarted = true;        
+          main();
+          createFood();
+        }      
       }
-
-      setTimeout(function onTick() {  
-        isChangingDirection = false;
-        clearCanvas();
-        drawFood();       
-        snakeMovement();
-        drawSnake();
-
-        main();
-      }, gameSpeed)                   
-    }
-
-    function clearCanvas() {      
-      context.fillStyle = 'gray';
-      context.strokeStyle = 'black';
-
-      context.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-      context.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
-    }
-
-    function snakeMovement() {
-      const head = { x: snake[0].x + movementX,
-                     y: snake[0].y + movementY};
-      snake.unshift(head);
-
-      const ateFood = snake[0].x === foodX && snake[0].y === foodY;
-      if(ateFood) {
-        score += 10;
-        document.getElementById("score").innerHTML = score;
-        createFood();
-      }
-      else{
-        snake.pop();
-      }      
-    }
-
-    function drawSnake() {
-      snake.forEach(drawSnakePart)
-    }
-
-    function drawSnakePart(snakePart) {
-      context.fillStyle = 'cyan';
-      context.strokeStyle = 'darkblue';
-      context.fillRect(snakePart.x, snakePart.y, 10, 10);
-      context.strokeRect(snakePart.x, snakePart.y, 10, 10);
-    }    
-
-    function changeDirection(event) {
-      const LEFT_KEY = 65;
-      const RIGHT_KEY = 68;
-      const UP_KEY = 87;
-      const DOWN_KEY = 83;
-
-      if(isChangingDirection) {
-        return;
-      }
-
-      isChangingDirection = true;
-
-      const keyPressed = event.keyCode;
-
-      const goingUp = movementY === -10;
-      const goingDown = movementY === 10;
-      const goingRight = movementX === 10;
-      const goingLeft = movementX === -10;
-
-      if(keyPressed === LEFT_KEY && !goingRight) { 
-        movementX = -10; 
-        movementY = 0;
+  
+      function main() {
+  
+        if(gameOver()) {
+          isGameStarted = false;
+          return
         }
-
-      if(keyPressed === RIGHT_KEY && !goingLeft) {
-        movementX = 10;
-        movementY = 0;
+  
+        setTimeout(function onTick() {  
+          isChangingDirection = false;
+          clearCanvas();
+          drawFood();       
+          snakeMovement();
+          drawSnake();
+  
+          main();
+        }, gameSpeed)                   
       }
-
-      if(keyPressed === UP_KEY && !goingDown) {
-        movementX = 0;
-        movementY = -10;
+  
+      function clearCanvas() {      
+        context.fillStyle = 'gray';
+        context.strokeStyle = 'black';
+  
+        context.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+        context.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
       }
-
-      if(keyPressed === DOWN_KEY && !goingUp) {
-        movementX = 0;
-        movementY = 10;
-      }
-    }
-
-    function randomFactor(min, max) {
-      return Math.round((Math.random() * (max - min) + min) / 10) * 10;
-    }
-
-    function createFood() {
-      foodX = randomFactor(0, gameCanvas.width - 10);
-      foodY = randomFactor(0, gameCanvas.height - 10);
-
-      snake.forEach(function isFoodOnSnake(part) {
-        const isFoodOnSnake = part.x == foodX && part.y == foodY;
-        if(isFoodOnSnake) {
+  
+      function snakeMovement() {
+        const head = { x: snake[0].x + movementX,
+                       y: snake[0].y + movementY};
+        snake.unshift(head);
+  
+        const ateFood = snake[0].x === foodX && snake[0].y === foodY;
+        if(ateFood) {
+          score += 10;
+          document.getElementById("score").innerHTML = score;
           createFood();
         }
-      })
-    }
-
-    function drawFood() {
-      context.fillStyle = "orange";
-      context.strokeStyle = "orangered";
-
-      context.fillRect(foodX, foodY, 10, 10);
-      context.strokeRect(foodX, foodY, 10, 10);
-    }    
-
-    function gameOver() {      
-      for(let i = 4; i < snake.length; i++) {
-        if(snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
-          return true
+        else{
+          snake.pop();
+        }      
+      }
+  
+      function drawSnake() {
+        snake.forEach(drawSnakePart)
+      }
+  
+      function drawSnakePart(snakePart) {
+        context.fillStyle = 'cyan';
+        context.strokeStyle = 'darkblue';
+        context.fillRect(snakePart.x, snakePart.y, 10, 10);
+        context.strokeRect(snakePart.x, snakePart.y, 10, 10);
+      }    
+  
+      function changeDirection(event) {
+        const LEFT_KEY = 65;
+        const RIGHT_KEY = 68;
+        const UP_KEY = 87;
+        const DOWN_KEY = 83;
+  
+        if(isChangingDirection) {
+          return;
+        }
+  
+        isChangingDirection = true;
+  
+        const keyPressed = event.keyCode;
+  
+        const goingUp = movementY === -10;
+        const goingDown = movementY === 10;
+        const goingRight = movementX === 10;
+        const goingLeft = movementX === -10;
+  
+        if(keyPressed === LEFT_KEY && !goingRight) { 
+          movementX = -10; 
+          movementY = 0;
+          }
+  
+        if(keyPressed === RIGHT_KEY && !goingLeft) {
+          movementX = 10;
+          movementY = 0;
+        }
+  
+        if(keyPressed === UP_KEY && !goingDown) {
+          movementX = 0;
+          movementY = -10;
+        }
+  
+        if(keyPressed === DOWN_KEY && !goingUp) {
+          movementX = 0;
+          movementY = 10;
         }
       }
-
-      const hitLeftWall = snake[0].x < 0;
-      const hitRightWall = snake[0].x > gameCanvas.width - 10
-      const hitTopWall = snake[0].y < 0;
-      const hitBottomWall = snake[0].y > gameCanvas.height - 10;
-
-      return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall
-    }
-
-  </script>
-</body>
+  
+      function randomFactor(min, max) {
+        return Math.round((Math.random() * (max - min) + min) / 10) * 10;
+      }
+  
+      function createFood() {
+        foodX = randomFactor(0, gameCanvas.width - 10);
+        foodY = randomFactor(0, gameCanvas.height - 10);
+  
+        snake.forEach(function isFoodOnSnake(part) {
+          const isFoodOnSnake = part.x == foodX && part.y == foodY;
+          if(isFoodOnSnake) {
+            createFood();
+          }
+        })
+      }
+  
+      function drawFood() {
+        context.fillStyle = "orange";
+        context.strokeStyle = "orangered";
+  
+        context.fillRect(foodX, foodY, 10, 10);
+        context.strokeRect(foodX, foodY, 10, 10);
+      }    
+  
+      function gameOver() {      
+        for(let i = 4; i < snake.length; i++) {
+          if(snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
+            return true
+          }
+        }
+  
+        const hitLeftWall = snake[0].x < 0;
+        const hitRightWall = snake[0].x > gameCanvas.width - 10
+        const hitTopWall = snake[0].y < 0;
+        const hitBottomWall = snake[0].y > gameCanvas.height - 10;
+  
+        return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall
+      }
+  
+    </script>
+  </body>
+</html>
