@@ -34,30 +34,39 @@
       let movementX = 10;
       let movementY = 0;
       let gameSpeed = 100;
-  
+      
+      //Definimos a canvas em uma variável
       const gameCanvas = document.getElementById("gameCanvas");
+      //Definimos o contexto da canvas como um ambiente 2D
       const context = gameCanvas.getContext("2d");         
   
       clearCanvas();
       
+      //Muda de direção toda vez que a tecla é apertada
       document.addEventListener("keydown", changeDirection);
       
+      //Começa o jogo
       function gameStart() {
-        
+                
         if(isGameStarted == false) {
           isGameStarted = true;        
           main();
           createFood();
         }      
       }
-  
+      
+      //Aqui fica a maioria das funções que fazem o jogo funcionar
       function main() {
-  
+        
+        //A primeira coisa que vai ser verificada é se o jogo acabou
         if(gameOver()) {
           isGameStarted = false;
           return
         }
-  
+        
+        //Em um intervalo de tempo, nós vamos apagar a Canvas, desenhar a
+        //posição da comida, realizar o movimento da Snake e então desenha-lá
+        //e repetir tudo chamando main() no final
         setTimeout(function onTick() {  
           isChangingDirection = false;
           clearCanvas();
@@ -68,7 +77,8 @@
           main();
         }, gameSpeed)                   
       }
-  
+      
+      //Desenhamos a Canvas
       function clearCanvas() {      
         context.fillStyle = 'gray';
         context.strokeStyle = 'black';
@@ -76,12 +86,15 @@
         context.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
         context.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
       }
-  
+      
+      //Movimentamos a Snake
       function snakeMovement() {
         const head = { x: snake[0].x + movementX,
                        y: snake[0].y + movementY};
         snake.unshift(head);
   
+        //Ao pegar a comida adicionamos os pontos, aumentamos o tamanho da
+        //Snake e desenhamos uma nova comida
         const ateFood = snake[0].x === foodX && snake[0].y === foodY;
         if(ateFood) {
           score += 10;
@@ -92,24 +105,30 @@
           snake.pop();
         }      
       }
-  
+      
+      //Realiza o desenho da Snake
       function drawSnake() {
         snake.forEach(drawSnakePart)
       }
-  
+      
+      //Desenha a cada parte da Snake chamando cada elemento do seu array
       function drawSnakePart(snakePart) {
         context.fillStyle = 'cyan';
         context.strokeStyle = 'darkblue';
         context.fillRect(snakePart.x, snakePart.y, 10, 10);
         context.strokeRect(snakePart.x, snakePart.y, 10, 10);
       }    
-  
+      
+      //Mudamos de direção da Snake, passando um evento (aqui é a tecla que
+      //precionamos)
       function changeDirection(event) {
         const LEFT_KEY = 65;
         const RIGHT_KEY = 68;
         const UP_KEY = 87;
         const DOWN_KEY = 83;
   
+        //Isso previne que a Snake mude para a direção oposta que esteja indo
+        //quando precionado duas teclas de movimento simultaneamente
         if(isChangingDirection) {
           return;
         }
@@ -143,15 +162,19 @@
           movementY = 10;
         }
       }
-  
+      
+      //Cria um número aleatório entre um min e max para criar a comida
       function randomFactor(min, max) {
         return Math.round((Math.random() * (max - min) + min) / 10) * 10;
       }
-  
+      
+      //Cria a comida em um lugar aleatório
       function createFood() {
         foodX = randomFactor(0, gameCanvas.width - 10);
         foodY = randomFactor(0, gameCanvas.height - 10);
   
+        //Caso a posição aleatória seja onde o corpo da Snake estiver, chamamos
+        //a função novamente
         snake.forEach(function isFoodOnSnake(part) {
           const isFoodOnSnake = part.x == foodX && part.y == foodY;
           if(isFoodOnSnake) {
@@ -160,6 +183,7 @@
         })
       }
   
+      //Desenha a comida, definindo a cor dela
       function drawFood() {
         context.fillStyle = "orange";
         context.strokeStyle = "orangered";
@@ -168,6 +192,7 @@
         context.strokeRect(foodX, foodY, 10, 10);
       }    
   
+      //Retorna true se a cabeça da Snake acerta o corpo ou os limites da Canvas
       function gameOver() {      
         for(let i = 4; i < snake.length; i++) {
           if(snake[i].x === snake[0].x && snake[i].y === snake[0].y) {

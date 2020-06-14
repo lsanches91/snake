@@ -5,4 +5,5 @@
 [x] Adicionar fim de jogo.
 [x] Estilizar página.
 [x] Adicionar comando em que o jogo só começe ao apertar um botão.
+[x] Adicionado cometários no código.
 [ ] Reiniciar o jogo sem reiniciar a página.
